@@ -6,6 +6,7 @@ import (
 	"rpssl_service/core/choiceModule/choiceServices"
 	"rpssl_service/core/playEngineModule/playEngineControllers"
 	"rpssl_service/core/playEngineModule/playEngineServices"
+	"rpssl_service/core/scoreboardModule/scoreboardServices"
 	"rpssl_service/infrastructures/helpers"
 	"rpssl_service/infrastructures/services"
 )
@@ -15,6 +16,9 @@ var playEngineController = playEngineControllers.PlayEngineController{
 	ChoiceService: choiceServices.ChoiceService{},
 	RandomNumberService: services.RandomNumberService{
 		RestRequestHelperService: helpers.RestRequestHelper{},
+	},
+	ScoreboardService: scoreboardServices.ScoreboardService{
+		RedisService: services.RedisService{},
 	},
 }
 

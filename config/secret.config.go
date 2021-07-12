@@ -4,6 +4,7 @@ import (
 	"github.com/joho/godotenv"
 	"log"
 	"os"
+	"strconv"
 )
 
 func init() {
@@ -13,6 +14,18 @@ func init() {
 	}
 }
 
-func GetString(key string) string {
- 	return os.Getenv(key)
+func GetString(key, defaultValue string) string {
+ 	data := os.Getenv(key)
+	if data != "" {
+		return data
+	}
+	return defaultValue
+}
+
+func GetInt(key string,defaultValue int) int {
+	b,err := strconv.Atoi(GetString(key,""))
+	if err != nil {
+		return defaultValue
+	}
+	return b
 }

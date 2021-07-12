@@ -7,6 +7,8 @@ import (
 	"rpssl_service/core/choiceModule/choiceServices"
 	"rpssl_service/core/playEngineModule/playEngineModels"
 	"rpssl_service/core/playEngineModule/playEngineServices"
+	"rpssl_service/core/scoreboardModule/scoreboardModels"
+	"rpssl_service/core/scoreboardModule/scoreboardServices"
 	"rpssl_service/infrastructures/services"
 	"rpssl_service/utils"
 )
@@ -15,6 +17,7 @@ type PlayEngineController struct {
     PlayEngineService  playEngineServices.IPlayEngineService
     ChoiceService      choiceServices.IChoiceService
     RandomNumberService services.IRandomNumberService
+    ScoreboardService scoreboardServices.IScoreboardService
 }
 
 // controller action that process game result again computer
@@ -59,6 +62,19 @@ func (controller PlayEngineController) PlayAgainstComputer(ctx echo.Context) err
 		result["results"]="win"
 	}else {
 		result["results"]="lose"
+	}
+
+	if request.PlayerId != "" {
+		err := controller.ScoreboardService.AddScores(scoreboardModels.ScoreboardModel{
+			Player: request.PlayerId,
+			Choice: request.Player,
+			ComputerChoice: randomNumber,
+			Won: result["results"] == "win",
+		})
+
+		if err != nil {
+			log.Printf("error saving score : %v",err)
+		}
 	}
 
 	return ctx.JSON(http.StatusOK,result)

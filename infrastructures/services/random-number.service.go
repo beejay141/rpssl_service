@@ -17,7 +17,7 @@ type RandomNumberService struct {
 }
 
 func (service RandomNumberService) GetRandomNumber(limit int) (int,error) {
-    status,byteData,err := service.RestRequestHelperService.Get(fmt.Sprintf("%s/random",config.GetString("random_number_base_url")),nil)
+    status,byteData,err := service.RestRequestHelperService.Get(fmt.Sprintf("%s/random",config.GetString("random_number_base_url","")),nil)
 	if status != 200 {
 		return 1, err
 	}
