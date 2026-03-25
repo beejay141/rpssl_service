@@ -31,7 +31,7 @@
       
 ##### *Play Controller*
 - POST : `/play`
-- BODY : `{player: 1 ,playerId:"bolaji"}`
+- BODY : `{player: 1 ,playerId:"doe"}`
   * player: player's choice, required
   * playerId: to track player's scores, optional
 - RESULT : `{player:1,computer:2,results:"lose"}`
